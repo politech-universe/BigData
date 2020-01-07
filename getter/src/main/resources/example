@@ -1,0 +1,23 @@
+Content-Type: application/json; charset=UTF-8
+{
+ "kind": "youtube#videoListResponse",
+ "etag": "\"p4VTdlkQv3HQeTEaXgvLePAydmU/eSiWzbzRWOlYG8FiRUpJhjdfL9M\"",
+ "pageInfo": {
+  "totalResults": 1,
+  "resultsPerPage": 1
+ },
+ "items": [
+  {
+   "kind": "youtube#video",
+   "etag": "\"p4VTdlkQv3HQeTEaXgvLePAydmU/n5yhnzLa4nYYS_HElmaqrFunY30\"",
+   "id": "NGxXecaEyI8",
+   "statistics": {
+    "viewCount": "556233",
+    "likeCount": "15174",
+    "dislikeCount": "2204",
+    "favoriteCount": "0",
+    "commentCount": "1536"
+   }
+  }
+ ]
+}

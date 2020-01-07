@@ -1,0 +1,30 @@
+select t1.r as County, t2.cat as Category
+from (
+       select r, max(c) as m
+       from (select regions.name as r, count(*) as c
+             from video_region
+                    left join videos
+                              on videoid = id
+                    left join categories
+                              on videos.category = categories.id
+                    left join regions
+                              on video_region.regionid = regions.id
+             group by categories.name,regions.name
+             order by regions.name, c DESC
+            ) as t
+       group by r
+     ) as t1
+       left join
+     (select regions.name as r,categories.name as cat, count(*) as c
+      from video_region
+             left join videos
+                       on videoid = id
+             left join categories
+                       on videos.category = categories.id
+             left join regions
+                       on video_region.regionid = regions.id
+      group by categories.name,regions.name
+      order by regions.name, c DESC
+     ) as t2
+       on m = c and t2.r = t1.r
+order by County
