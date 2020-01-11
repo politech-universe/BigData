@@ -33,7 +33,6 @@ public class Parser {
     static String category = "https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&id=%s&key=%s";
 
 
-
     static String getDate(String string) {
         //Format: yyyy-mm-dd
         return string.split("T")[0];
@@ -166,8 +165,6 @@ public class Parser {
                 }
             }
 
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -212,37 +209,28 @@ public class Parser {
             curVideo.setTrendNum(n + 1);
             curVideo.setTrendDate(LocalDate.now().toString());
             try {
-                if (Connector.hasVideo(id, connection)) {
-                    Connector.pushVideoRegion(curVideo, connection);
-                    System.out.println("NEW REGION VIDEO");
-                } else {
+                if (!Connector.hasVideo(id, connection)) {
                     getStatistics(curVideo);
                     getSnippetInfo(curVideo, curUser);
                     if (!Connector.hasUser(curUser.getId(), connection)) {
                         getUserInfo(curUser);
                         Connector.pushUser(curUser, connection);
-                        System.out.println("NEW USER");
                     }
                     curCat.setId(curVideo.getCategory());
                     if (!Connector.hasCategory(curCat.getId(), connection)) {
                         getCategory(curCat);
                         Connector.pushCategory(curCat, connection);
-                        System.out.println("NEW CATEGORY");
                     }
                     Connector.pushVideo(curVideo, connection);
-                    Connector.pushVideoRegion(curVideo, connection);
-                    System.out.println("NEW VIDEO");
                 }
-            } catch (Exception e) {
-                throw new JSONException("Day limit");
+                Connector.pushVideoRegion(curVideo, connection);
+            } catch (JSONException e) {
+                throw new JSONException("");
             }
-
-        }else{
-            System.out.println("ALREADY ADDED");
         }
     }
 
-    static void processWithRegion(Region region, Connection conn) throws IOException, SQLException {
+    public void processWithRegion(Region region, Connection conn) throws IOException, SQLException {
         Document doc = Jsoup.connect(templateUrl + region.getAbb()).maxBodySize(0).get();
         try {
             Element trends = doc.body().selectFirst("ul.expanded-shelf-content-list.has-multiple-items");
@@ -255,14 +243,13 @@ public class Parser {
             for (int i = 0; i < videoId.size() - 1; i++) {
                 processVideo(videoId.get(i), i, region.getId(), conn);
             }
-        } catch (Exception e){
-            System.out.println("AGAIN BAD REQUEST");
-            processWithRegion(region,conn);
+        } catch (NullPointerException e) {
+            processWithRegion(region, conn);
         }
 
     }
 
-    public static void setKey(String key) {
+    public void setKey(String key) {
         Parser.key = key;
     }
 }

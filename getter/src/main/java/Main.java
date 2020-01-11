@@ -7,11 +7,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Main {
-    static String url = ;
-    static String user = ;
-    static String password = ;
+    static String url = "jdbc:postgresql://194.58.108.158:5432/postgres";
+    static String user = "postgres";
+    static String password = "1111";
     static String[] keyset = {
-     
+            "AIzaSyCGJbkwrhLLpMbCWZ_WcoJHozIAyDS-G9E",
+            "AIzaSyDNOIawXkBalawAPSxa8yfoT4OQnk-T4_Q",
+            "AIzaSyD6KIrHNeWCwkZSJUNbdC5GRHtqvFHJGjc",
+            "AIzaSyAaEv1WSisy85MluN1TZhJVCKTef1fm5CU"
     };
     private static Connection connection;
 
@@ -29,18 +32,11 @@ public class Main {
 
     }
 
-    private static void runAnalyz() {
-
-    }
-
-    ;
-
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
         try {
             connection = DriverManager.getConnection(url, user, password);
             runScrapFromKeySet(0, connection);
-            runAnalyz();
         } catch (SQLException e) {
             System.out.println("Connection failure.");
             e.printStackTrace();
