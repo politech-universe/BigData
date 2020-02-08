@@ -7,15 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Main {
-    static String url = "jdbc:postgresql://194.58.108.158:5432/postgres";
-    static String user = "postgres";
-    static String password = "1111";
-    static String[] keyset = {
-            "AIzaSyCGJbkwrhLLpMbCWZ_WcoJHozIAyDS-G9E",
-            "AIzaSyDNOIawXkBalawAPSxa8yfoT4OQnk-T4_Q",
-            "AIzaSyD6KIrHNeWCwkZSJUNbdC5GRHtqvFHJGjc",
-            "AIzaSyAaEv1WSisy85MluN1TZhJVCKTef1fm5CU"
-    };
     private static Connection connection;
 
     private static void runScrapFromKeySet(int i, Connection connection) throws SQLException, IOException {
